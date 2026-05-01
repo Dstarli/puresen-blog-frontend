@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('blog')).sort((a, b) =>
+  new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puresen Journal</title>
+  <meta name="description" content="Gentle essential oil guides, room scent rituals, and aromatic wellness ideas from Puresen." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito Sans', sans-serif; background: #f7f3ee; color: #513832; }
+    header { background: rgba(255,250,247,.88); border-bottom: 1px solid rgba(81,56,50,.1); padding: 1.35rem 2rem; display: flex; align-items: baseline; gap: .85rem; }
+    header h1 { font-family: 'Comfortaa', sans-serif; font-size: 1.8rem; font-weight: 700; letter-spacing: -.06em; }
+    header h1 a { color: #513832; text-decoration: none; }
+    header span { color: rgba(81,56,50,.58); font-size: .9rem; }
+    main { max-width: 1040px; margin: 3rem auto; padding: 0 1.25rem; }
+    .intro { max-width: 680px; margin-bottom: 2rem; }
+    .intro h2 { font-family: 'Comfortaa', sans-serif; font-size: clamp(2rem, 5vw, 3.25rem); letter-spacing: -.055em; line-height: 1.08; margin-bottom: .8rem; }
+    .intro p { color: rgba(81,56,50,.68); font-size: 1.05rem; line-height: 1.75; }
+    .section { font-size: .75rem; text-transform: uppercase; letter-spacing: .14em; color: rgba(81,56,50,.52); margin: 2.5rem 0 1.25rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.35rem; }
+    .card { background: #fffaf7; border: 1px solid rgba(81,56,50,.1); border-radius: 28px; overflow: hidden; box-shadow: 0 18px 55px rgba(81,56,50,.08); transition: transform .28s ease, box-shadow .28s ease; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 26px 72px rgba(81,56,50,.13); }
+    .card img { width: 100%; height: 210px; object-fit: cover; background: #efe8df; }
+    .card-body { padding: 1.25rem; }
+    .tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .85rem; }
+    .tags span { background: rgba(216,142,146,.16); color: #8d5154; font-size: .72rem; padding: .28rem .7rem; border-radius: 999px; }
+    .card h3 { font-family: 'Comfortaa', sans-serif; font-size: 1.05rem; line-height: 1.45; letter-spacing: -.035em; margin-bottom: .55rem; }
+    .card p { font-size: .92rem; color: rgba(81,56,50,.66); line-height: 1.65; }
+    .card a { display: inline-flex; margin-top: 1rem; color: #8d5154; text-decoration: none; font-weight: 800; }
+    .card a:hover { text-decoration: underline; }
+    .empty { background: #fffaf7; border: 1px solid rgba(81,56,50,.1); border-radius: 24px; padding: 2rem; color: rgba(81,56,50,.68); }
+    footer { text-align: center; padding: 3rem 1rem; color: rgba(81,56,50,.52); font-size: .85rem; border-top: 1px solid rgba(81,56,50,.08); margin-top: 4rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="https://puresen.com">puresen</a></h1>
+    <span>/ Journal</span>
+  </header>
+  <main>
+    <section class="intro">
+      <h2>Gentle guides for scent, space, and small rituals.</h2>
+      <p>Learn how to choose essential oils for room diffusion, daily scent routines, and thoughtful gifting without medical claims or confusing wellness jargon.</p>
+    </section>
+    <h2 class="section">Latest Articles</h2>
+    {posts.length ? (
+      <div class="grid">
+        {posts.map(post => (
+          <div class="card">
+            {post.data.image && <img src={post.data.image.url} alt={post.data.image.alt} />}
+            <div class="card-body">
+              <div class="tags">
+                {post.data.tags.map(tag => <span>{tag}</span>)}
+              </div>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+              <a href={`/blog/${post.slug}/`}>Read more</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="empty">Puresen articles are being prepared. Check back soon.</div>
+    )}
+  </main>
+  <footer>© {new Date().getFullYear()} Puresen. For aromatic use only. Not intended to diagnose, treat, cure, or prevent disease.</footer>
+</body>
+</html>
