@@ -8,6 +8,8 @@ Static Astro blog for Puresen SEO articles.
 - n8n publishes Markdown files into `src/content/blog`.
 - GitHub Actions deploys `dist` to Cloudflare Pages.
 - WordPress/WooCommerce stays focused on store, product, cart, and checkout.
+- Production article URLs live under `https://puresen.com/blog/` through the maintained Cloudflare route.
+- The `pages.dev` hostname is an origin/preview only; do not create duplicate WordPress article copies.
 
 ## Commands
 
@@ -24,7 +26,7 @@ src/content/blog/*.md
 
 ## Safety Rules
 
-- Essential oil articles must avoid medical/drug claims.
+- Aroma oil articles must avoid medical/drug claims.
 - Use aromatic/lifestyle language only.
 - Include caution language when relevant:
   - do not ingest

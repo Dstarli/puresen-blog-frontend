@@ -2,7 +2,7 @@ import { getCollection } from 'astro:content';
 
 export async function GET() {
   const posts = await getCollection('blog');
-  const base = 'https://www.takumius.com/blog';
+  const base = 'https://puresen.com/blog';
 
   const urls = posts.map(post => `
   <url>
